@@ -1,0 +1,218 @@
+{
+  "python": [
+    {
+      "id": "PY001",
+      "severity": "error",
+      "pattern": "^\\s*except\\s*:",
+      "message": "Bare 'except' clause catches all exceptions including system exits.",
+      "description": "Use 'except Exception as e:' to catch only application-level exceptions and avoid swallowing KeyboardInterrupt or SystemExit."
+    },
+    {
+      "id": "PY002",
+      "severity": "error",
+      "pattern": "\\beval\\s*\\(",
+      "message": "Use of eval() is a security risk — it executes arbitrary code.",
+      "description": "Avoid eval(). Use ast.literal_eval() for parsing literals, or restructure logic to remove the need for dynamic evaluation."
+    },
+    {
+      "id": "PY003",
+      "severity": "error",
+      "pattern": "\\bexec\\s*\\(",
+      "message": "Use of exec() is a security risk — it executes arbitrary code strings.",
+      "description": "exec() can execute any Python code passed to it, making it dangerous with untrusted input. Refactor to avoid it."
+    },
+    {
+      "id": "PY004",
+      "severity": "warning",
+      "pattern": "from\\s+\\S+\\s+import\\s+\\*",
+      "message": "Wildcard import ('from module import *') pollutes the namespace.",
+      "description": "Wildcard imports make it unclear which names are in scope and can cause silent name collisions. Import only what you need."
+    },
+    {
+      "id": "PY005",
+      "severity": "warning",
+      "pattern": "==\\s*None|None\\s*==",
+      "message": "Use 'is None' instead of '== None' for identity comparison.",
+      "description": "Comparing to None with '==' can be overridden by __eq__. Always use 'is None' or 'is not None' for None checks."
+    },
+    {
+      "id": "PY006",
+      "severity": "warning",
+      "pattern": "def\\s+\\w+\\s*\\([^)]*=\\s*\\[",
+      "message": "Mutable default argument (list) detected — shared across all calls.",
+      "description": "Default arguments are evaluated once at function definition. Use 'None' as default and create the list inside the function body."
+    },
+    {
+      "id": "PY007",
+      "severity": "warning",
+      "pattern": "def\\s+\\w+\\s*\\([^)]*=\\s*\\{",
+      "message": "Mutable default argument (dict) detected — shared across all calls.",
+      "description": "Same issue as mutable list defaults. Use 'None' and initialise inside the function."
+    },
+    {
+      "id": "PY008",
+      "severity": "suggestion",
+      "pattern": "#\\s*(TODO|FIXME|HACK|XXX)",
+      "message": "Unresolved TODO/FIXME comment found.",
+      "description": "Consider resolving or tracking this comment in your issue tracker before shipping."
+    },
+    {
+      "id": "PY009",
+      "severity": "suggestion",
+      "pattern": "\\bprint\\s*\\(",
+      "message": "print() call found — remove debug output before production.",
+      "description": "Debug print statements left in production code can leak sensitive data. Use the logging module instead."
+    },
+    {
+      "id": "PY010",
+      "severity": "suggestion",
+      "pattern": "^\\s*pass\\s*$",
+      "message": "'pass' in block — possibly an unimplemented section.",
+      "description": "A bare 'pass' may indicate an empty function, class, or except block that needs a real implementation."
+    }
+  ],
+  "javascript": [
+    {
+      "id": "JS001",
+      "severity": "error",
+      "pattern": "\\beval\\s*\\(",
+      "message": "Use of eval() is dangerous — executes arbitrary code and disables optimisations.",
+      "description": "eval() runs a string as JavaScript. It opens XSS vectors and prevents V8/SpiderMonkey from optimising the surrounding scope."
+    },
+    {
+      "id": "JS002",
+      "severity": "error",
+      "pattern": "document\\.write\\s*\\(",
+      "message": "document.write() is unsafe and blocks page rendering.",
+      "description": "document.write() replaces the entire document when called after load. Use DOM manipulation methods like createElement/appendChild instead."
+    },
+    {
+      "id": "JS003",
+      "severity": "error",
+      "pattern": "innerHTML\\s*=",
+      "message": "Direct innerHTML assignment can introduce XSS vulnerabilities.",
+      "description": "If any part of the assigned string comes from user input, it becomes an XSS vector. Use textContent for text or sanitise HTML before insertion."
+    },
+    {
+      "id": "JS004",
+      "severity": "warning",
+      "pattern": "\\bvar\\s+",
+      "message": "Use of 'var' — prefer 'const' or 'let' for block-scoped variables.",
+      "description": "'var' is function-scoped and hoisted, leading to subtle bugs. ES6+ 'const' and 'let' provide block scoping and clearer intent."
+    },
+    {
+      "id": "JS005",
+      "severity": "warning",
+      "pattern": "[^=!<>]=[^=>]|[^=!<>]==(?!=)",
+      "message": "Loose equality (==) found — consider strict equality (===).",
+      "description": "'==' performs type coercion (e.g. 0 == '0' is true). Use '===' to compare value and type without coercion."
+    },
+    {
+      "id": "JS006",
+      "severity": "warning",
+      "pattern": "console\\.(log|warn|error|debug)\\s*\\(",
+      "message": "console statement found — remove debug output before production.",
+      "description": "Leaving console statements in production clutters the browser console and may expose sensitive data."
+    },
+    {
+      "id": "JS007",
+      "severity": "warning",
+      "pattern": "setTimeout\\s*\\(\\s*['\"]",
+      "message": "setTimeout with a string argument evaluates code like eval().",
+      "description": "Passing a string to setTimeout is equivalent to eval(). Pass a function reference instead: setTimeout(() => { ... }, delay)."
+    },
+    {
+      "id": "JS008",
+      "severity": "suggestion",
+      "pattern": "#\\s*(TODO|FIXME|HACK|XXX)",
+      "message": "Unresolved TODO/FIXME comment found.",
+      "description": "Consider resolving or tracking this comment in your issue tracker before shipping."
+    },
+    {
+      "id": "JS009",
+      "severity": "suggestion",
+      "pattern": "//\\s*(TODO|FIXME|HACK|XXX)",
+      "message": "Unresolved TODO/FIXME comment found.",
+      "description": "Consider resolving or tracking this comment in your issue tracker before shipping."
+    },
+    {
+      "id": "JS010",
+      "severity": "suggestion",
+      "pattern": "==(\\s*)null|null(\\s*)==",
+      "message": "Use '=== null' or check with '!= null' (or '!== null') for null comparisons.",
+      "description": "Loose null comparison with '==' also matches undefined. Be explicit about which you intend."
+    }
+  ],
+  "cpp": [
+    {
+      "id": "CPP001",
+      "severity": "error",
+      "pattern": "\\bgets\\s*\\(",
+      "message": "gets() is unsafe and removed in C11/C++14 — use fgets() instead.",
+      "description": "gets() performs no bounds checking and always causes a buffer overflow vulnerability. Replace with fgets(buf, size, stdin)."
+    },
+    {
+      "id": "CPP002",
+      "severity": "error",
+      "pattern": "\\bsystem\\s*\\(",
+      "message": "system() executes shell commands — dangerous with any user-controlled input.",
+      "description": "system() passes a string to the OS shell. If any part comes from user input this is a command injection vulnerability."
+    },
+    {
+      "id": "CPP003",
+      "severity": "error",
+      "pattern": "\\bstrcpy\\s*\\(",
+      "message": "strcpy() performs no bounds check — use strncpy() or std::string.",
+      "description": "strcpy() copies until a null terminator with no size limit, leading to buffer overflows. Use strncpy(dst, src, sizeof(dst)-1) or std::string."
+    },
+    {
+      "id": "CPP004",
+      "severity": "error",
+      "pattern": "\\bsprintf\\s*\\(",
+      "message": "sprintf() has no buffer size limit — use snprintf() instead.",
+      "description": "sprintf() can overflow the destination buffer. Replace with snprintf(buf, sizeof(buf), fmt, ...) to enforce a size limit."
+    },
+    {
+      "id": "CPP005",
+      "severity": "warning",
+      "pattern": "\\bgoto\\s+\\w+",
+      "message": "'goto' statement detected — consider restructuring with loops or functions.",
+      "description": "goto makes control flow hard to follow and maintain. Use structured alternatives like loops, break, continue, or helper functions."
+    },
+    {
+      "id": "CPP006",
+      "severity": "warning",
+      "pattern": "printf\\s*\\(\\s*\\w+\\s*\\)",
+      "message": "printf() called with a variable as the format string — format string injection risk.",
+      "description": "If the first argument to printf is a user-controlled string, attackers can exploit format specifiers. Always use printf(\"%s\", str)."
+    },
+    {
+      "id": "CPP007",
+      "severity": "warning",
+      "pattern": "\\bnew\\b",
+      "message": "Raw 'new' detected — ensure corresponding 'delete' exists to avoid memory leaks.",
+      "description": "Each 'new' must be paired with 'delete' (or 'delete[]' for arrays). Prefer smart pointers (unique_ptr, shared_ptr) in modern C++."
+    },
+    {
+      "id": "CPP008",
+      "severity": "warning",
+      "pattern": "\\bmalloc\\s*\\(",
+      "message": "malloc() detected — prefer 'new' in C++ or use smart pointers.",
+      "description": "malloc() does not call constructors and returns void*, requiring a cast. Prefer new/delete or RAII containers in C++."
+    },
+    {
+      "id": "CPP009",
+      "severity": "suggestion",
+      "pattern": "//\\s*(TODO|FIXME|HACK|XXX)",
+      "message": "Unresolved TODO/FIXME comment found.",
+      "description": "Consider resolving or tracking this comment in your issue tracker before shipping."
+    },
+    {
+      "id": "CPP010",
+      "severity": "suggestion",
+      "pattern": "\\busing\\s+namespace\\s+std\\b",
+      "message": "'using namespace std' in global scope can cause name collisions.",
+      "description": "Pulling in all of std at global scope can silently shadow or conflict with your own names. Prefer explicit 'std::' prefix or limit the using directive to a small scope."
+    }
+  ]
+}

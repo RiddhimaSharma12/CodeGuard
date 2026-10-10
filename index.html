@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeGuard — Code Analysis &amp; Bug Detection</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Header ─────────────────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">🛡</span>
+        <div class="logo-text">
+          <span class="logo-name">CodeGuard</span>
+          <span class="logo-sub">Code Analysis &amp; Bug Detection</span>
+        </div>
+      </div>
+      <div class="header-badge">⚙ Rule-Based Static Analysis — No AI Required</div>
+    </div>
+  </header>
+
+  <!-- ── Main Layout ─────────────────────────────────────────────── -->
+  <main class="main-grid">
+
+    <!-- Left: Editor Pane -->
+    <section class="pane editor-pane" aria-label="Code Editor">
+      <div class="pane-header">
+        <h2 class="pane-title">Code Editor</h2>
+        <div class="language-row">
+          <label for="language-select" class="sr-only">Select Language</label>
+          <select id="language-select" class="language-select">
+            <option value="python">🐍 Python</option>
+            <option value="javascript">🟨 JavaScript</option>
+            <option value="cpp">⚙ C++</option>
+          </select>
+        </div>
+      </div>
+
+      <textarea
+        id="code-input"
+        class="code-textarea"
+        spellcheck="false"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        placeholder="Paste your code here or click 'Load Example' to try a sample…"
+        aria-label="Source code input"
+      ></textarea>
+
+      <!-- Validation message -->
+      <p id="input-error" class="input-error" role="alert" hidden>
+        ⚠ Please paste some code before analysing.
+      </p>
+
+      <div class="button-row">
+        <button id="btn-analyze" class="btn btn-primary">
+          <span class="btn-icon">▶</span> Analyse Code
+        </button>
+        <button id="btn-example" class="btn btn-secondary">
+          <span class="btn-icon">📋</span> Load Example
+        </button>
+        <button id="btn-clear" class="btn btn-ghost">
+          <span class="btn-icon">✕</span> Clear
+        </button>
+      </div>
+    </section>
+
+    <!-- Right: Results Pane -->
+    <section class="pane results-pane" aria-label="Analysis Results" aria-live="polite">
+
+      <!-- Summary Bar -->
+      <div class="summary-bar" id="summary-bar">
+        <div class="summary-idle">
+          <span class="summary-hint">Run an analysis to see results here.</span>
+        </div>
+      </div>
+
+      <!-- Results Cards -->
+      <div class="results-cards" id="results-cards">
+        <div class="empty-state">
+          <div class="empty-icon">🔍</div>
+          <p>No analysis run yet.</p>
+          <p class="empty-sub">Paste code and click <strong>Analyse Code</strong>.</p>
+        </div>
+      </div>
+
+      <!-- Recent Analyses -->
+      <div class="history-section">
+        <h3 class="history-title">Recent Analyses</h3>
+        <ul id="history-list" class="history-list">
+          <li class="history-empty">No history yet.</li>
+        </ul>
+        <button id="btn-clear-history" class="btn btn-ghost btn-sm" hidden>
+          Clear History
+        </button>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ── Footer ─────────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>CodeGuard — Static analysis using rule-based pattern matching. Not an AI product. Built with plain HTML, CSS &amp; JavaScript.</p>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
